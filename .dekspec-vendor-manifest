@@ -1,0 +1,33 @@
+# Files vendored by dekspec — managed by `dekspec upgrade`.
+# Used for snapshot-based pruning on upgrade.
+# Do not edit by hand.
+dekspec/EXAMPLES.md
+dekspec/amendment-log-types.md
+dekspec/architecture-frameworks-reference.md
+dekspec/architecture.md
+dekspec/cli-reference.md
+dekspec/dekspec-operating-guide.md
+dekspec/dekspec-quick-reference.md
+dekspec/templates/adr-template.md
+dekspec/templates/architecture-element-template.md
+dekspec/templates/checklists/eval-quality-checklist.md
+dekspec/templates/checklists/python-quality-checklist.md
+dekspec/templates/checklists/security-checklist.md
+dekspec/templates/constitution-template.md
+dekspec/templates/context-spec-template.md
+dekspec/templates/dekspec-config-template.yaml
+dekspec/templates/git-hooks/destructive-git-guard.py.template
+dekspec/templates/git-hooks/post-merge.template
+dekspec/templates/git-hooks/pre-commit.template
+dekspec/templates/git-hooks/pre-push.template
+dekspec/templates/git-hooks/quality.pre-commit-config.yaml.template
+dekspec/templates/glossary-template.md
+dekspec/templates/implementation-brief-template.md
+dekspec/templates/intent-template.md
+dekspec/templates/interface-contract-template.md
+dekspec/templates/lite-constitution-template.md
+dekspec/templates/lite-intent-template.md
+dekspec/templates/mission-template.md
+dekspec/templates/security-profile-template.md
+dekspec/templates/system-vision-template.md
+dekspec/templates/working-spec-template.md
