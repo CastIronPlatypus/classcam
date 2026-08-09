@@ -26,7 +26,7 @@ Core
 - **Related WSs:** none
 - **Related ICs:** none
 - **Related IBs:** none
-- **Related Intents:** none
+- **Related Intents:** INT-001, INT-002, INT-003, INT-004
 - **Owners:** Jeff Haskin
 
 ## Implements
