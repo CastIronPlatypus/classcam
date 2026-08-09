@@ -2,7 +2,7 @@
 
 ## Status
 
-PROPOSED
+ACCEPTED
 
 ## Supersession
 
@@ -19,7 +19,7 @@ PROPOSED
 
 ## Modified
 
-2026-08-09
+2026-08-10
 
 ## Date
 
@@ -90,3 +90,4 @@ The browser platform later removes the capture/clipboard/canvas ceilings, or a c
 | Date | Type | Change | Author |
 |------|------|--------|--------|
 | 2026-08-09 | Substantive | Initial authoring — records the native-iPadOS-over-web decision. | noreply@anthropic.com |
+| 2026-08-10 | Substantive | Accepted with INT-001 foundation (clears status inversion under ACCEPTED AE-001) | noreply@anthropic.com |

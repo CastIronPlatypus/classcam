@@ -74,10 +74,10 @@ INT-001 — Capture a presentation still with live preview and digital zoom
 
 | INT | Title | Type | Status | Notes |
 |---|---|---|---|---|
-| INT-001 | Capture a presentation still with live preview and digital zoom | feature | DRAFT | first slice: capture screen |
-| INT-002 | Detect and adjust the presentation's four corners | feature | DRAFT | corner detection + draggable handles + default box |
-| INT-003 | Perspective-correct, crop to aspect ratio, and export | feature | DRAFT | warp + 16:9/4:3 + clipboard + share |
-| INT-004 | Correct the display colour cast by tapping a neutral spot | feature | DRAFT | tap-to-white-balance, non-destructive, reset |
+| INT-001 | Capture a presentation still with live preview and digital zoom | feature | IMPLEMENTING | first slice: capture screen; decomposed → ADR-005/006, WS-001/002, IC-001, IB-001/002/003, 7 beads |
+| INT-002 | Detect and adjust the presentation's four corners | feature | IMPLEMENTING | decomposed → ADR-007, WS-003/004, IB-004/005/006, 5 beads |
+| INT-003 | Perspective-correct, crop to aspect ratio, and export | feature | IMPLEMENTING | decomposed → ADR-008, WS-005/006, IB-007/008/009, 5 beads |
+| INT-004 | Correct the display colour cast by tapping a neutral spot | feature | IMPLEMENTING | decomposed → ADR-009, WS-007, IB-010/011/012, 5 beads |
 
 ### Discovered prerequisites
 
@@ -85,7 +85,7 @@ INT-001 — Capture a presentation still with live preview and digital zoom
 
 ### Burndown
 
-LOCKED: 0 / Estimated total: 4 / Sketches: 3
+LOCKED: 0 / Estimated total: 4 / IMPLEMENTING: 4 (all decomposed to beads; 22 beads total across the Mission) / Sketches: 0
 
 ### Flag transitions
 

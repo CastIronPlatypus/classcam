@@ -2,7 +2,7 @@
 
 ## Status
 
-PROPOSED
+ACCEPTED
 
 ## Supersession
 
@@ -19,7 +19,7 @@ PROPOSED
 
 ## Modified
 
-2026-08-09
+2026-08-10
 
 ## Date
 
@@ -88,3 +88,4 @@ A UI need arises that SwiftUI cannot serve without disproportionate effort.
 | Date | Type | Change | Author |
 |------|------|--------|--------|
 | 2026-08-09 | Substantive | Initial authoring — records the SwiftUI-over-UIKit decision. | noreply@anthropic.com |
+| 2026-08-10 | Substantive | Status PROPOSED to ACCEPTED — auto-transition by `dekspec audit linkage --fix` (T-STATUS status-maturity coherence, ADR-020). | dekspec-audit-fix |

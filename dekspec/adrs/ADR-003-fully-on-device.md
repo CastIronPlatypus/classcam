@@ -2,7 +2,7 @@
 
 ## Status
 
-PROPOSED
+ACCEPTED
 
 ## Supersession
 
@@ -19,7 +19,7 @@ PROPOSED
 
 ## Modified
 
-2026-08-09
+2026-08-10
 
 ## Date
 
@@ -74,3 +74,4 @@ A future capability genuinely requires processing that cannot run on-device.
 | Date | Type | Change | Author |
 |------|------|--------|--------|
 | 2026-08-09 | Substantive | Initial authoring — records the fully-on-device decision. | noreply@anthropic.com |
+| 2026-08-10 | Substantive | Status PROPOSED to ACCEPTED — auto-transition by `dekspec audit linkage --fix` (T-STATUS status-maturity coherence, ADR-020). | dekspec-audit-fix |

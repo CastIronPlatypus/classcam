@@ -1,0 +1,101 @@
+# persona-council run state.
+#
+# The agent fills this in as it walks the skill. The tools in tools/ read it on
+# every call. There is deliberately NO "current_step" field: position is
+# INFERRED from which step predicates are satisfied (see tools/chaperone.py).
+# You cannot skip a step by marking it done — you advance only by producing the
+# artifacts each step requires, and those are format-checked.
+#
+# Copy this to a run-specific path, e.g. ./council-<assignment-slug>.yaml, and
+# pass it as --state to every tool.
+
+run:
+  assignment: "Produce a plan for building ClassCam — a single-purpose native iPadOS app that captures an angled photo of a presentation (TV/monitor/whiteboard), auto-detects the four corners, lets the user nudge them, tap-corrects the display's blue color cast, and perspective-corrects/crops/exports a clean 1920-long-edge slide to the clipboard and share sheet — that is deeply optimized for Swift: idiomatic architecture, project organization, concurrency, and the correct Swift/Apple-framework approach for each feature (AVFoundation capture, Vision rectangle detection, Core Image warp + white balance, SwiftUI UI, UIKit interop for clipboard/share). The plan must surface Swift best practices, etiquette, and the specific pitfalls of each of these subsystems."
+  constraints: "Decided and off the table: native iPadOS app in Swift with a SwiftUI UI layer (ADR-004); Apple frameworks only — AVFoundation (custom capture session, live preview, digital zoom via videoZoomFactor, full-res stills via AVCapturePhotoOutput), Vision (VNDetectRectanglesRequest), Core Image (CIPerspectiveCorrection + per-channel gain for white balance), UIKit interop (UIPasteboard, UIActivityViewController) (ADR-002); fully on-device, no backend/network/accounts (ADR-003); native over web (ADR-001). Output is a rectilinear slide 1920px on the long edge in 16:9 or 4:3. Built and run locally in Xcode on a Mac; this repo holds specification only. Scope is one slide, one straighten, one color fix — NOT OCR, not a cloud service, not a general photo editor. The deliverable of this council is a PLAN, not code."
+  repo_root: "/data/projects/classcam"
+  status: plan_ready      # open | plan_ready | abandoned
+
+steps:
+
+  # PHASE 0
+  intake:
+    assignment_captured: true
+    constraints: "Native iPadOS/Swift/SwiftUI; Apple frameworks only (AVFoundation, Vision, Core Image, UIKit interop); fully on-device; 1920 long-edge output in 16:9 or 4:3; single-purpose (no OCR/cloud/general editing); built in Xcode on Mac; deliverable is a plan, not code."
+
+  # PHASE 1
+  scout_council:
+    ran: true
+    raw_picks:
+      - {name: "The Swift / SwiftUI App Architect", kind: profession, in_db: false, slug: "the_swift_app_architect"}
+      - {name: "The AVFoundation Capture Engineer", kind: profession, in_db: false, slug: "the_avfoundation_capture_engineer"}
+      - {name: "The Core Image / Vision Imaging Engineer", kind: profession, in_db: false, slug: "the_core_image_vision_engineer"}
+    # DB probed for all three centered disciplines (Swift/SwiftUI app arch; AVFoundation
+    # capture; Core Image/Vision imaging). Every hit was far (distance ~1.0+ in this
+    # embedding space); the DB has NO Apple-platform / Swift specialists. All 3 => needs_research.
+
+  centering:
+    settled: true          # true only when council has exactly 3 and all centered
+    rescout_ignored: []    # no existing (in_db) picks to reject — nothing to re-scout away from
+    council:
+      - {name: "The Swift / SwiftUI App Architect", slug: "the_swift_app_architect", kind: profession, centered: true, in_db: false, needs_research: true}
+      - {name: "The AVFoundation Capture Engineer", slug: "the_avfoundation_capture_engineer", kind: profession, centered: true, in_db: false, needs_research: true}
+      - {name: "The Core Image / Vision Imaging Engineer", slug: "the_core_image_vision_engineer", kind: profession, centered: true, in_db: false, needs_research: true}
+
+  # PHASE 2 — loop per council member where needs_research == true
+  research:
+    queue: ["the_swift_app_architect", "the_avfoundation_capture_engineer", "the_core_image_vision_engineer"]
+    cursor: 3              # index into queue (all 3 processed)
+    members:
+      the_swift_app_architect:
+        researched: true
+        decision: single      # one coherent worldview with facets, not fracturing sub-disciplines
+        justified: false      # n/a for single
+        authored: true
+        db_verified: true     # top hit [0.593] for "SwiftUI app architecture / concurrency / state"
+        guidance: "Entry-point seat for app structure, concurrency model, state management, project organization; sets the skeleton the subsystem specialists fill in; talks a small app OUT of over-architecture."
+      the_avfoundation_capture_engineer:
+        researched: true
+        decision: single
+        justified: false
+        authored: true
+        db_verified: true     # top hit [0.761] for "AVFoundation session/preview/still capture"
+        guidance: "Camera sensor to captured still: session threading, preview bridging, zoom, full-res stills, permissions, orientation, interruptions. Lives behind the architect's async seam; hands pixels+orientation to the imaging engineer."
+      the_core_image_vision_engineer:
+        researched: true
+        decision: single
+        justified: false
+        authored: true
+        db_verified: true     # top hit [0.675] for "Core Image perspective / Vision detection / white balance"
+        guidance: "Everything downstream of the shutter: Vision quad detection, coordinate-space conversions, CIPerspectiveCorrection warp, linear-space white balance, single reused CIContext, 1920 output + PNG export. Owns geometry + color correctness."
+
+  # PHASE 3 — convene (07), debate (08), synthesize (09)
+  debate:
+    convened: true         # agent-mail up (am CLI); guide AzureCedar + 3 seats registered
+    channel_uid: "3f9c1a7e2b6d4c8a05e1"  # /data/projects/classcam/.agent-mail.yaml (slug data-projects-classcam)
+    guide_registered: true # AzureCedar (guide) registered on the channel
+    registered: ["MossyMountain", "IndigoCove", "IvorySnow"]  # Architect, Capture, Imaging
+    # agent ids for SendMessage continuation: MossyMountain=a705d48fe3d5c5b69,
+    # IndigoCove=a039662969774b63b, IvorySnow=a20f5923c3dbe7180
+    rounds:
+      - round: 1
+        order: ["MossyMountain", "IndigoCove", "IvorySnow"]
+        turns:
+          MossyMountain: "am msg — R1 Swift App Architect: one Stage enum state machine (capture/processing/result) as value types; talk team OUT of MVVM/Coordinator/DI/Combine; single @Observable @MainActor AppModel; CaptureService + ImagingService actors; Sendable value types (CapturedImage/Quad/WhitePoint/AspectRatio/Slide) cross actor lines, no CIImage/AVCaptureSession does; Swift 6 strict concurrency from commit 1; feature-slice layout + pure ClassCamCore target for geometry/color math (unit-testable, no UIKit/AVFoundation); narrow async seams: capturePhoto() async throws -> CapturedImage, detectQuad/render(ProcessingState) one CIContext pass."
+          IndigoCove: "am msg 365 — R1 AVFoundation Capture: one AVCaptureSession on a dedicated serial queue, all config/start/stop off main (startRunning blocks); preview = UIViewRepresentable whose UIView layerClass IS AVCaptureVideoPreviewLayer, videoGravity .resizeAspectFill, build once no per-render rebuild; full-res via AVCapturePhotoOutput maxPhotoDimensions + .quality; bridge photo delegate with withCheckedThrowingContinuation and RETAIN delegate by settings.uniqueID; zoom = videoZoomFactor clamped, digital (crops sensor), capture still at full format; permissions NSCameraUsageDescription+requestAccess+Settings deep link; orientation videoRotationAngle (not deprecated videoOrientation), carry orientation as metadata not pre-rotated pixels; handle interruptions/thermal; exposes capturePhoto() async throws -> CapturedImage(pixelbuffer+CGImagePropertyOrientation), setZoom, start/stop. Disagreement: actor must hop to session's serial queue; who owns orientation."
+          IvorySnow: "am msg — R1 Core Image/Vision: pin 3 coordinate spaces (Vision normalized bottom-left / SwiftUI top-left points / Core Image bottom-left pixels), conversions written ONCE in one Geometry file as pure unit-tested functions; orientation applied FIRST via .oriented() (Capture tells, Imaging applies — one owner); VNDetectRectanglesRequest tuned for glowing angled screen (minConfidence ~0.3, quadratureTolerance generous ~30-45, minAspectRatio ~0.3), best-by-confidence, mandatory default inset-box fallback, detection only SEEDS handles never re-run over edits; correction = ONE lazy CIImage graph (oriented -> CIPerspectiveCorrection with CIVector corners -> WB gain -> CILanczosScaleTransform to 1920 -> crop to aspect) rendered ONCE through one reused CIContext to sRGB CGImage -> PNG, verify dimensions; white balance in LINEAR light (sample tapped pixel via 1x1 render in known space, gains g_c=gray/channel normalized to green, diagonal CIColorMatrix in extendedLinearSRGB, encode back), non-destructive (store point+gains, cheap rebuild); CIContext once; export sRGB PNG to UIPasteboard + UIActivityViewController. Flexible on actor vs value-function set — math must be pure/Sendable regardless, only CIContext render needs actor serialization."
+      - round: 2
+        order: ["IndigoCove", "IvorySnow", "MossyMountain"]
+        turns:
+          IndigoCove: "am msg 370 — R2 Capture: ACCEPTS actor CaptureService seam; internally actor owns private sessionQueue DispatchQueue, marshals every AVCaptureSession call via withCheckedThrowingContinuation (actor=Sendable-safe await, queue=AVFoundation thread affinity); preview frames stay off actor mailbox on own layer. Orientation LOCKED: CapturedImage seals CGImagePropertyOrientation at shutter, pixels never rotated, Imaging applies .oriented(). Concedes videoGravity=.resizeAspect (user must see whole surface to frame). New ask: keep CapturedImage a THIN Sendable envelope (pixelbuffer+orientation+dims) not eager 12MP CGImage on capture path."
+          IvorySnow: "am msg 372 — R2 Imaging: accepts thin envelope, builds CIImage(cvPixelBuffer:)+.oriented() as first node; RIDER: buffer must carry tagged pixel-format + CGColorSpace so linear-light WB sampling reads a KNOWN encoding. Actor/Core split precise — into ClassCamCore (pure/Sendable/tested): coord conversions+Y-flips, quad ordering/validation, gain math, 1920 size/crop math; inside ImagingService actor: only CIContext/Vision work (graph, VNDetectRectanglesRequest, render), actor calls pure funcs. Single-pass render confirmed; detectQuad separate feeds handles. New flow: white-point sampling not in render — add sampleGains(at:in:) on actor called on tap, sampled through SAME CIContext, store gains+point in ProcessingState; do NOT sample UIImage on MainActor. Will assert output dims+colorspace post-render; one CIContext app-lifetime."
+          MossyMountain: "am msg — R2 Architect closes/LOCKS: accepts sessionQueue-inside-actor + thin envelope (with colorspace tag, non-negotiable); no Sendable type forces eager materialization (happens once lazily in ImagingService graph). Core-vs-actor boundary LOCKED as drawn. White-point flow: tap on MainActor -> AppModel `await imaging.sampleGains(at:in:)` -> store WhitePoint{tappedPoint,gains} in ProcessingState -> `await imaging.render(...)` reads stored gains; Reset=nil, re-tap=overwrite, sampling+render share one CIContext. LOCKED SURFACE — value types: CapturedImage, Quad, AspectRatio, WhiteBalanceGains, WhitePoint, ProcessingState, Slide, Stage; actors: CaptureService{startPreview, capturePhoto->CapturedImage} + UIViewRepresentable preview; ImagingService{detectQuad, sampleGains, render->Slide}; one @MainActor @Observable AppModel owns stage+both actors. RISK flagged: CVPixelBuffer from pool can be recycled across actor hop — CapturedImage must OWN its buffer (deliver outside recurring preview pool, or deep-copy app-owned buffer at shutter before crossing to ImagingService)."
+      - round: 3
+        order: ["MossyMountain", "IndigoCove", "IvorySnow"]
+        turns:
+          MossyMountain: "am msg — R3 Architect ratify+sequence: RATIFIES locked surface unchanged. Build order: FIRST scaffolding/walking-skeleton (Xcode project + ClassCamCore package; Swift 6 language mode + complete strict concurrency + warnings-as-errors; Info.plist NSCameraUsageDescription; define Stage + all value types; AppModel + 3 empty screens switching on stage; stub actors returning canned values -> app navigates on fake data, compiles clean) THEN INT-001 capture -> INT-002 detect+adjust (Quad drag pure MainActor on normalized points, default box on nil) -> INT-003 render single pass -> Slide + UIPasteboard + share + aspect via @AppStorage -> INT-004 tap->sampleGains->store->re-render, Reset=nil. Checklist: value types default (only refs = AppModel + 2 actors, no singletons); @Observable AppModel via @Environment, ephemeral per-view @State, @Binding only aspect; structured concurrency from .task{} (cancel on disappear, no detached Task); only locked value types cross actor lines; NO MVVM/Coordinator/DI/Combine; typed-throws errors no try!/force-unwrap; ClassCamCore holds ALL pure math. Tests: Swift Testing on ClassCamCore off-simulator (quad ordering, coord round-trips, gain neutralization, output sizing 1920x1080/1920x1440) + AppModel transition tests with faked actors. CVPixelBuffer lifetime fix is an INT-001 acceptance check."
+          IndigoCove: "am msg 375 — R3 Capture ratify+sequence: RATIFIES. INT-001 order: (a) plist NSCameraUsageDescription; (b) permission gate authorizationStatus/requestAccess/Settings deep-link; (c) session on sessionQueue: guard builtInWideAngleCamera back, add input, preset .photo, add AVCapturePhotoOutput, maxPhotoDimensions=format max, commit, startRunning; (d) preview UIViewRepresentable hand session once, updateUIView inert; (e) connection.videoRotationAngle guarded; (f) setZoom clamp on sessionQueue in lockForConfiguration; (g) capturePhoto delegate mirror maxPhotoDimensions + .quality, retain delegate by settings.uniqueID, bridge via continuation; (h) BUFFER-OWNERSHIP FIX in didFinishProcessingPhoto: deep-copy CVPixelBuffer (CVPixelBufferCreate+memcpy per plane, or fileDataRepresentation) BEFORE resuming continuation so CapturedImage owns memory pool can't reclaim — never hand a pooled buffer across the line; (i) lifecycle start/stop + interruptions + systemPressureState. Checklist adds: tag buffer color space (sRGB unless deliberately wide). Tests off-device: zoom-clamp math, permission branching, orientation mapping, CapturedImage immutability; capture path NOT testable off-device. On-device attestation: sub-second shutter-to-still at .quality, full native res, bad blue-cast light, interruption mid-capture cleanly, deep-copied buffer survives to Imaging, zoom-then-capture full frame."
+          IvorySnow: "am msg 376 — R3 Imaging ratify+sequence: RATIFIES. Order: (1) Geometry conversions in ClassCamCore FIRST, unit-tested on known rectangles (normalized-BL <-> pixel-BL <-> view-points-TL, Y-flips, quad ordering/validation, 1920 output-size+crop math) — nothing device-bound proceeds until green; (2) VNDetectRectanglesRequest on oriented image, generous quadratureTolerance ~30-45, minConfidence ~0.3, permissive aspect, best-observation, mandatory default inset-box fallback; (3) map observation corners through tested conversions to seed 4 draggable handles (detection seeds, drags own); (4) one-graph render oriented->CIPerspectiveCorrection->CILanczosScaleTransform to 1920->crop, ONE render through shared CIContext to sRGB CGImage, assert dims+colorspace; (5) export sRGB PNG -> UIPasteboard + UIActivityViewController; (6) WB loop tap->sampleGains through shared CIContext in tagged colorspace->linear-light gains g_R=G/R,g_G=1,g_B=G/B via CIColorMatrix->store gains+point in state->re-render, Reset drops gains. Checklist: conversions once/tested, .oriented() first, CIImage lazy render-once, ONE app-lifetime CIContext, linear-light gains not gamma, sample via CIContext not UIImage pixel, non-destructive gains in state, generous tolerance + mandatory fallback, Lanczos to exactly 1920 + assert dims/colorspace, sRGB export, don't read .extent on infinite images. Tests off-device: coordinate round-trips, quad ordering, linear gain math (+gamma-vs-linear divergence proof), output sizing both aspects. On-device: detection on real glowing angled screen, drag feel, visual WB correctness, PNG pastes clean into GoodNotes/Notability at 1920."
+    synthesized_plan: "dekspec/historical-artifacts/classcam-swift-council-plan.md"   # step 09 — THE DELIVERABLE
+
+# Cross-cutting. Bank concerns here and surface them at synthesis (step 09).
+worries: []                # - {step: "", note: "", surfaced: false}

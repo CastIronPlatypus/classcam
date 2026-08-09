@@ -2,7 +2,7 @@
 
 ## Status
 
-PROPOSED
+ACCEPTED
 
 ## Subtype
 
@@ -18,14 +18,14 @@ Core
 
 ## Modified
 
-2026-08-09
+2026-08-10
 
 ## Linked Artifacts
 
-- **Related ADRs:** ADR-001, ADR-002, ADR-003, ADR-004
-- **Related WSs:** none
-- **Related ICs:** none
-- **Related IBs:** none
+- **Related ADRs:** ADR-001, ADR-002, ADR-003, ADR-004, ADR-005, ADR-006, ADR-007, ADR-008, ADR-009
+- **Related WSs:** WS-001, WS-002, WS-003, WS-004, WS-005, WS-006, WS-007
+- **Related ICs:** IC-001
+- **Related IBs:** IB-001, IB-002, IB-003, IB-004, IB-005, IB-006, IB-007, IB-008, IB-009, IB-010, IB-011, IB-012
 - **Related Intents:** INT-001, INT-002, INT-003, INT-004
 - **Owners:** Jeff Haskin
 
@@ -99,6 +99,17 @@ flowchart LR
 
 A typical run: the user opens the app to the capture screen, frames the presentation with the zoom control, and taps the shutter to take a full-resolution still. The app moves to the processing screen, detects the surface's corners, and lets the user drag them and tap a neutral spot to correct colour. On completion the app perspective-corrects and crops to the chosen aspect ratio, applies the white-point correction, exports to the clipboard, and shows the result, from which the user may share, re-edit, or start over.
 
+## Internal Structure
+
+*Per ADR-005 and ADR-006. The implementing Swift sources live in the local Xcode project; this section describes the architectural shape they realise.*
+
+The app is one `@MainActor`, `@Observable` application-state owner holding a single `Stage` state machine (`capture` → `processing` → `result`), plus two isolated service actors reached through narrow `async` interfaces:
+
+- a **capture service** (owns the AVFoundation session on a private serial queue) that realises the *Capture stage* — live preview, digital-zoom framing, and full-resolution still capture (INT-001);
+- an **imaging service** (owns the single Core Image context) that realises the *Corner detection*, *Perspective correction*, *White-point correction*, and *Export* stages (INT-002 / INT-003 / INT-004).
+
+Only `Sendable` value types cross an actor boundary; the correctness-critical pure logic and those value types live in the UI-free `ClassCamCore` package (ADR-006). The first such boundary value — the captured still handed from the Capture stage to the imaging pipeline — is defined by IC-001 (`CapturedImage`).
+
 ## Constraints and Quality Notes
 
 - Runs on iPadOS as a native application.
@@ -113,3 +124,6 @@ A typical run: the user opens the app to the capture screen, frames the presenta
 | Date | Type | Change | Author |
 |------|------|--------|--------|
 | 2026-08-09 | Substantive | Initial authoring — ClassCam App Container AE describing the single on-device iPadOS app slice. | noreply@anthropic.com |
+| 2026-08-09 | Substantive | INT-001 decomposition: added Internal Structure section (one @Observable AppModel + two service actors; ClassCamCore pure package) and linked ADR-005/006, WS-001/002, IC-001, IB-001/002/003. | noreply@anthropic.com |
+| 2026-08-10 | Substantive | Status PROPOSED to ACCEPTED — auto-transition by `dekspec audit linkage --fix` (T-STATUS status-maturity coherence, ADR-020). | dekspec-audit-fix |
+| 2026-08-10 | Substantive | Full MSN-001 decomposition: linked ADR-007/008/009, WS-003…007, IB-004…012 (INT-002/003/004 orchestrated to beads). | noreply@anthropic.com |

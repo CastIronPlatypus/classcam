@@ -2,7 +2,7 @@
 
 ## Status
 
-PROPOSED
+ACCEPTED
 
 ## Supersession
 
@@ -19,7 +19,7 @@ PROPOSED
 
 ## Modified
 
-2026-08-09
+2026-08-10
 
 ## Date
 
@@ -90,3 +90,4 @@ The first-party frameworks prove insufficient for the app's detection or correct
 | Date | Type | Change | Author |
 |------|------|--------|--------|
 | 2026-08-09 | Substantive | Initial authoring — records the Apple-native Vision + Core Image decision. | noreply@anthropic.com |
+| 2026-08-10 | Substantive | Status PROPOSED to ACCEPTED — auto-transition by `dekspec audit linkage --fix` (T-STATUS status-maturity coherence, ADR-020). | dekspec-audit-fix |
