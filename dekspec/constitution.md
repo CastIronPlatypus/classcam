@@ -47,9 +47,10 @@ For the ClassCam app itself (enforced in the local Xcode project, not here): the
 
 ## Article 4: Architecture Principles
 
-<!-- Greenfield: no ADRs authored yet. This ref-array is intentionally empty in DRAFT and will be populated via `--resync` as load-bearing ADRs land (e.g. the native-vs-web decision, the on-device-only decision). -->
-
-_No Architecture Decision Records cited yet. Standing architectural commitments — native-iPadOS-over-web, fully-on-device, Apple-frameworks-only, single-full-resolution-capture (no multi-frame in V1) — will be captured as ADRs and cited here on the next `--resync` once those ADRs are authored._
+- ADR-001 — ClassCam is a native iPadOS app, not a web app.
+- ADR-002 — Detection and correction use Apple-native Vision and Core Image.
+- ADR-003 — All processing is on-device; no backend, network, or accounts.
+- ADR-004 — The UI is built in SwiftUI.
 
 ## Article 5: Development Workflow
 
@@ -66,17 +67,13 @@ Spec-authoring sessions default to the **highest-capability model tier available
 
 **Boundary ADRs:**
 
-<!-- Greenfield: boundary ADRs not yet authored. Populated on `--resync` once the non-goal decisions are recorded as ADRs. -->
-
-_None cited yet._
+- ADR-003 — On-device processing; captured images never leave the device.
 
 **Boundary AEs:**
 
-<!-- Greenfield: no Architecture Elements authored yet. Populated on `--resync` once AEs exist. -->
+- AE-001 — The ClassCam App names its non-goals (no server-side processing, no OCR, no general photo editing).
 
-_None cited yet._
-
-**Standing non-goals (to be promoted to ADR/AE boundary refs):**
+**Standing non-goals:**
 
 - **Not a web app.** The project pivoted from a browser implementation to native iPadOS; browser/PWA delivery is out of scope.
 - **No OCR or text extraction.** ClassCam produces an image, not searchable text.
