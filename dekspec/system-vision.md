@@ -37,7 +37,6 @@ Photographing a slide off a screen from a classroom seat produces an image that 
 ## What We Are Not Building
 
 - **Not a web or PWA app** — mobile Safari can't provide a live preview plus full-resolution capture, and its permission/clipboard/canvas limits make the core flow fragile; native iPadOS removes those ceilings.
-- **Not a multi-frame image enhancer (in V1)** — burst capture, super-resolution, frame-stacking, and denoising are deferred to a later version so V1 can ship the core capture-and-correct flow first.
 - **Not an OCR or text-extraction tool** — ClassCam outputs a picture of the slide, not searchable or editable text; note apps consume the image.
 - **Not a cloud service** — no backend, accounts, sync, or upload; the app is fully on-device to stay fast and private.
 - **Not a general photo editor** — no filters, drawing, or freeform adjustment beyond the perspective crop and the single tap-to-white-balance correction; scope is deliberately one slide, one straighten, one colour fix.
@@ -48,3 +47,4 @@ Photographing a slide off a screen from a classroom seat produces an image that 
 |------|------|--------|--------|
 | 2026-08-09 | Substantive | Initial authoring — System Vision for ClassCam, the native iPadOS slide capture-and-correct app. | noreply@anthropic.com |
 | 2026-08-09 | Substantive | Removed author-assumed content not supplied by the engineer: dropped the invented Operating Principles and made-up time targets, and broadened the audience to anyone at a class/lecture/presentation per the engineer's own framing. | noreply@anthropic.com |
+| 2026-08-09 | Substantive | Removed a deferred-feature exclusion per engineer direction to describe only what is being built now, not what is postponed. | noreply@anthropic.com |

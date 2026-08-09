@@ -78,7 +78,6 @@ _None cited yet._
 
 **Standing non-goals (to be promoted to ADR/AE boundary refs):**
 
-- **No multi-frame / burst image enhancement in V1.** Super-resolution, frame stacking, and denoising are explicitly deferred to V2.
 - **Not a web app.** The project pivoted from a browser implementation to native iPadOS; browser/PWA delivery is out of scope.
 - **No OCR or text extraction.** ClassCam produces an image, not searchable text.
 - **No cloud, backend, or account system.** Fully on-device; no network dependency.
@@ -88,8 +87,9 @@ _None cited yet._
 
 | Date       | Type        | Change                                                                 | Author               |
 |------------|-------------|------------------------------------------------------------------------|----------------------|
-| 2026-08-09 | Substantive | Initial authoring — L0 Constitution bootstrapped for ClassCam (native iPadOS slide-capture app), encoding the settled V1 scope, tech stack, workflow split, and V2 boundaries. | noreply@anthropic.com |
+| 2026-08-09 | Substantive | Initial authoring — L0 Constitution bootstrapped for ClassCam (native iPadOS slide-capture app), encoding the settled scope, tech stack, workflow split, and boundaries. | noreply@anthropic.com |
 | 2026-08-09 | Substantive | Removed author-assumed content not supplied by the engineer: dropped the invented operating mantra, removed the minimum-iPadOS-version floor and the XCTest/no-warnings gates, and broadened the audience to anyone at a class/lecture/presentation. Confirmed direct with engineer: name ClassCam, SwiftUI, Apple-native Vision + Core Image, on-device requirement, both non-goals retained. | noreply@anthropic.com |
+| 2026-08-09 | Substantive | Removed a deferred-feature non-goal per engineer direction to describe only what is being built now, not what is postponed. | noreply@anthropic.com |
 
 ## Class Lanes
 
