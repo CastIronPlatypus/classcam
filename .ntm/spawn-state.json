@@ -1,0 +1,57 @@
+{
+  "batch_id": "spawn-20260810-023809-590dc07e",
+  "started_at": "2026-08-10T02:38:09.732847994+02:00",
+  "stagger_seconds": 60,
+  "total_agents": 6,
+  "prompts": [
+    {
+      "pane": "classcam__cc_1_opus-5",
+      "pane_id": "%18",
+      "order": 1,
+      "scheduled": "2026-08-10T02:38:10.186438859+02:00",
+      "sent": true,
+      "sent_at": "2026-08-10T02:38:15.860125914+02:00"
+    },
+    {
+      "pane": "classcam__cc_2_opus-5",
+      "pane_id": "%19",
+      "order": 2,
+      "scheduled": "2026-08-10T02:39:10.302321549+02:00",
+      "sent": true,
+      "sent_at": "2026-08-10T02:39:16.224912045+02:00"
+    },
+    {
+      "pane": "classcam__cc_3_opus-5",
+      "pane_id": "%20",
+      "order": 3,
+      "scheduled": "2026-08-10T02:40:10.417247405+02:00",
+      "sent": true,
+      "sent_at": "2026-08-10T02:40:16.574004548+02:00"
+    },
+    {
+      "pane": "classcam__cc_4_opus-5",
+      "pane_id": "%21",
+      "order": 4,
+      "scheduled": "2026-08-10T02:41:10.532182709+02:00",
+      "sent": true,
+      "sent_at": "2026-08-10T02:41:16.937668098+02:00"
+    },
+    {
+      "pane": "classcam__cc_5_opus-5",
+      "pane_id": "%22",
+      "order": 5,
+      "scheduled": "2026-08-10T02:42:10.647252547+02:00",
+      "sent": true,
+      "sent_at": "2026-08-10T02:42:16.861109165+02:00"
+    },
+    {
+      "pane": "classcam__cc_6_opus-5",
+      "pane_id": "%23",
+      "order": 6,
+      "scheduled": "2026-08-10T02:43:10.764087471+02:00",
+      "sent": true,
+      "sent_at": "2026-08-10T02:43:17.226123727+02:00"
+    }
+  ],
+  "completed_at": "2026-08-10T02:43:17.253621712+02:00"
+}
