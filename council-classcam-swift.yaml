@@ -12,7 +12,7 @@
 run:
   assignment: "Produce a plan for building ClassCam — a single-purpose native iPadOS app that captures an angled photo of a presentation (TV/monitor/whiteboard), auto-detects the four corners, lets the user nudge them, tap-corrects the display's blue color cast, and perspective-corrects/crops/exports a clean 1920-long-edge slide to the clipboard and share sheet — that is deeply optimized for Swift: idiomatic architecture, project organization, concurrency, and the correct Swift/Apple-framework approach for each feature (AVFoundation capture, Vision rectangle detection, Core Image warp + white balance, SwiftUI UI, UIKit interop for clipboard/share). The plan must surface Swift best practices, etiquette, and the specific pitfalls of each of these subsystems."
   constraints: "Decided and off the table: native iPadOS app in Swift with a SwiftUI UI layer (ADR-004); Apple frameworks only — AVFoundation (custom capture session, live preview, digital zoom via videoZoomFactor, full-res stills via AVCapturePhotoOutput), Vision (VNDetectRectanglesRequest), Core Image (CIPerspectiveCorrection + per-channel gain for white balance), UIKit interop (UIPasteboard, UIActivityViewController) (ADR-002); fully on-device, no backend/network/accounts (ADR-003); native over web (ADR-001). Output is a rectilinear slide 1920px on the long edge in 16:9 or 4:3. Built and run locally in Xcode on a Mac; this repo holds specification only. Scope is one slide, one straighten, one color fix — NOT OCR, not a cloud service, not a general photo editor. The deliverable of this council is a PLAN, not code."
-  repo_root: "/data/projects/classcam"
+  repo_root: "/data/projects/CastIronPlatypus/classcam"
   status: plan_ready      # open | plan_ready | abandoned
 
 steps:
